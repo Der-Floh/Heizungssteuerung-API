@@ -34,9 +34,9 @@ public sealed class WeatherAPI
 
     public async Task<double[]> GetFutureTemperatures(int forecastCount)
     {
-        WeatherModel[] weatherData = (await _client.GetForecastAsync(City, forecastCount, Measurement.Metric)).ToArray();
-        double[] temperatures = new double[weatherData.Length];
-        for (int i = 0; i < weatherData.Length; i++)
+        List<WeatherModel> weatherData = await _client.GetForecastAsync(City, forecastCount, Measurement.Metric);
+        double[] temperatures = new double[weatherData.Count];
+        for (int i = 0; i < weatherData.Count; i++)
             temperatures[i] = weatherData[i].Main.Temperature;
         return temperatures;
     }
@@ -49,9 +49,9 @@ public sealed class WeatherAPI
 
     public async Task<Weather[]> GetFutureWeather(int forecastCount)
     {
-        WeatherModel[] weatherData = (await _client.GetForecastAsync(City, forecastCount, Measurement.Metric)).ToArray();
-        Weather[] temperatures = new Weather[weatherData.Length];
-        for (int i = 0; i < weatherData.Length; i++)
+        List<WeatherModel> weatherData = await _client.GetForecastAsync(City, forecastCount, Measurement.Metric);
+        Weather[] temperatures = new Weather[weatherData.Count];
+        for (int i = 0; i < weatherData.Count; i++)
             temperatures[i] = new Weather(weatherData[i]);
         return temperatures;
     }
